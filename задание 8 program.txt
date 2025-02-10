@@ -1,0 +1,23 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        Class1 figure1 = new Class1();
+        Class1 figure2 = new Class1(5, 10);
+
+        // Обращение к полю описания и методам объектов и вывод результатов
+        Console.WriteLine("Фигура 1: " + figure1.description);
+        Console.WriteLine("Площадь боковой поверхности фигуры 1: " + figure1.CalculateLateralSurfaceArea().ToString("F2"));
+        Console.WriteLine("Площадь поверхности фигуры 1: " + figure1.CalculateSurfaceArea().ToString("F2"));
+        Console.WriteLine("Объем фигуры 1: " + figure1.CalculateVolume().ToString("F2"));
+
+        Console.WriteLine();
+
+        Console.WriteLine("Фигура 2: " + figure2.description);
+        Console.WriteLine("Площадь боковой поверхности фигуры 2: " + figure2.CalculateLateralSurfaceArea().ToString("F2"));
+        Console.WriteLine("Площадь поверхности фигуры 2: " + figure2.CalculateSurfaceArea().ToString("F2"));
+        Console.WriteLine("Объем фигуры 2: " + figure2.CalculateVolume().ToString("F2"));
+
+        Console.ReadLine();
+    }
+}

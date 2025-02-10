@@ -1,0 +1,86 @@
+namespace WindowsFormsApp3
+{
+    abstract public class BaseNotes
+    {
+        protected ArrayList notes = new ArrayList();
+
+        public BaseNotes()
+        {
+            notes.Add("IEnumerable<T>");
+            notes.Add("ICollection<T>");
+            notes.Add("IList<T>");
+            notes.Add("IEnumerator<T>");
+            notes.Add("ICOmparer<T>");
+        }
+
+    public string[] GetMyList()
+        {
+            string[] ArrStr = new string[notes.Count];
+            notes.CopyTo(ArrStr);
+            return ArrStr;
+        }
+        public void ClearList()
+        {
+            notes.Clear();
+        }
+
+        public class Worknotes : BaseNotes
+        {
+            public string[] GetMyList(bool b)
+            {
+                if (b) notes.Sort();
+                return GetMyList();
+            }
+            public void RemoveItem(int n)
+            {
+                notes.RemoveAt(n);
+            }
+            public bool AddItem(string s)
+            {
+                notes.Sort();
+                CaseInsensitiveComparer Compar = new CaseInsensitiveComparer();
+                int index = notes.BinarySearch(s, Compar);
+                if (index < 0)
+                {
+                    notes.Add(s);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            public void ReadFromFile(string filePath)
+            {
+                if (System.IO.File.Exists(filePath))
+                {
+                    notes.Clear();
+                    string[] lines = System.IO.File.ReadAllLines(filePath);
+                    notes.AddRange(lines);
+                }
+                else
+                {
+                    MessageBox.Show("Внешний текстовый файл не найден!", "Ошибка чтения файла!");
+                }
+            }
+            public void SaveListToFile(string[] list, string filePath)
+            {
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        foreach (string item in list)
+                        {
+                            writer.WriteLine(item);
+                        }
+                    }
+
+                    MessageBox.Show("Список успешно сохранен в файл.", "Успех");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при сохранении списка в файл: " + ex.Message, "Ошибка");
+                }
+            }
+
+        }
+    }
+}

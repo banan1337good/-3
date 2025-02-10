@@ -1,0 +1,113 @@
+namespace WindowsFormsApp3
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+        Worknotes view;
+        private object notes;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            view = new Worknotes();
+            listBox1.Items.Clear();
+            listBox1.Items.AddRange(view.GetMyList());
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (view is Worknotes) // если список есть 
+            {
+                listBox1.Items.Clear();
+                view.ClearList();
+            }
+            else
+                MessageBox.Show("Список не создан");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem != null)
+            {
+                int index = listBox1.Items.IndexOf(listBox1.SelectedItem);
+                view.RemoveItem(index);
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(view.GetMyList());
+            }
+            else
+                MessageBox.Show("Для удаления не выбрана строка!)");
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (view is Worknotes)
+            {
+                listBox1.Items.Clear();
+                listBox1.Items.AddRange(view.GetMyList(true));
+            }
+            else
+                MessageBox.Show("Невозможно совершить сортировку ");
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (view is Worknotes)
+            {
+                string str = textBox1.Text.Trim();
+                bool TempStr = view.AddItem(str);
+                if (str != "")
+                { 
+
+                    if (TempStr == true)
+                    {
+                        view.AddItem(str);
+                        listBox1.Items.Clear();
+                        listBox1.Items.AddRange(view.GetMyList(true));
+                    }
+                    else
+                        MessageBox.Show("Элемент уже существует!", "Ошибка");
+                 }
+                else
+                    MessageBox.Show("Пустая строка!", "Ошибка Ввода");
+             }
+            else
+                MessageBox.Show("Список не создан!");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            {
+                string filePath = "C:\\Users\\anast\\OneDrive\\Документы\\Visual Studio 2022\\TEST.txt";
+
+                if (view is Worknotes)
+                {
+                    ((Worknotes)view).ReadFromFile(filePath);
+                    listBox1.Items.Clear();
+                    listBox1.Items.AddRange(view.GetMyList());
+                }
+                else
+                {
+                    MessageBox.Show("Список не создан!", "Ошибка ввода!");
+                }
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+                saveFileDialog.Title = "Сохранить файл";
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+                    ArrayList TempList = new ArrayList();
+                    view.SaveListToFile(view.GetMyList(), filePath);
+                }
+            }
+        }
+
+    }
+}

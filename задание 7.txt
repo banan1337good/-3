@@ -1,0 +1,121 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Title = "Пантелеева Анастасия Олеговна, работа № 7, вариант № 11";
+        Console.WriteLine("Сортировка одномерного числового масива");
+        try
+        {
+            Console.WriteLine("Введите размер массива [от 30...40]:");
+            int size = int.Parse(Console.ReadLine());
+
+            if (size < 30 || size > 40)
+            {
+                throw new ArgumentException("Размер массива должен быть от 30 до 40.");
+            }
+
+            Console.WriteLine("Введите наименьшее значение диапазона случайного числа:");
+            int min = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Введите наибольшее значение диапазона случайного числа:");
+            int max = int.Parse(Console.ReadLine());
+
+            if (min >= max)
+            {
+                throw new ArgumentException("Наименьшее значение должно быть меньше наибольшего значения.");
+            }
+
+            int[] array = new int[size];
+            Random random = new Random();
+
+            for (int i = 0; i < size; i++)
+            {
+                array[i] = random.Next(min, max + 1);
+            }
+
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+            Console.WriteLine("Масив случайных чисел:");
+            PrintArray(array);
+
+            //Сортировка массива методом пузырька
+            bool isSorted;
+            int passes = 0;
+            do
+            {
+                isSorted = true;
+                for (int i = 0; i < size - 1 - passes; i++)
+                {
+                    if (array[i] > array[i + 1])
+                    {
+                        int temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        isSorted = false;
+                    }
+                }
+                passes++;
+            } while (!isSorted);
+
+
+            Console.WriteLine("Сортировка по возрастанию:");
+            PrintArray(array);
+
+            // Заполнение массива новой последовательностью случайных чисел
+            for (int i = 0; i < size; i++)
+            {
+                array[i] = random.Next(min, max + 1);
+            }
+
+            Console.WriteLine("-------------------------------------------------------------------------------------");
+
+            Console.WriteLine("Задание по работе с массивом");
+            Console.WriteLine("Масив случайных чисел:");
+            PrintArray(array);
+
+            double mean = CalculateMean(array);
+            double standardDeviation = CalculateStandardDeviation(array, mean);
+
+            Console.WriteLine("Стандартное отклонение элементов массива: " + Math.Round(standardDeviation,4));
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Ошибка: Введено некорректное число.");
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine("Ошибка: " + ex.Message);
+        }
+    }
+
+    static void PrintArray(int[] array)
+    {
+        foreach (int number in array)
+        {
+            Console.Write(number + " ");
+        }
+        Console.WriteLine();
+    }
+
+    static double CalculateMean(int[] array)
+    {
+        double sum = 0;
+        foreach (int number in array)
+        {
+            sum += number;
+        }
+        return sum / array.Length;
+    }
+
+    static double CalculateStandardDeviation(int[] array, double mean)
+    {
+        double sumOfSquares = 0;
+        foreach (int number in array)
+        {
+            sumOfSquares += Math.Pow(number - mean, 2);
+        }
+        double variance = sumOfSquares / array.Length;
+        return Math.Sqrt(variance);
+    }
+}

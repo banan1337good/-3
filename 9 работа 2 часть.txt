@@ -1,0 +1,110 @@
+using System;
+
+// Базовый класс для работы с рядом чисел
+class Series
+{
+    protected double x; // Значение аргумента
+    protected int n;    // Количество членов ряда
+
+    public Series(double x, int n)
+    {
+        this.x = x;
+        this.n = n;
+    }
+
+    public virtual double CalculateSum()
+    {
+        return 0; // Базовый класс не выполняет вычислений
+    }
+}
+
+// Производный класс для ряда с заданной точностью
+class CustomSeries : Series
+{
+    private double[] seriesValues; // Массив значений элементов ряда
+    private double precision;     // Заданная точность
+
+    public CustomSeries(double x, int n, double precision) : base(x, n)
+    {
+        this.precision = precision;
+        CalculateSeriesValues();
+    }
+
+    public override double CalculateSum()
+    {
+        double sum = 0;
+        for (int i = 0; i < n; i++)
+        {
+            sum += seriesValues[i];
+            if (Math.Abs(seriesValues[i]) < precision)
+                break; // Прерываем цикл, если достигнута заданная точность
+        }
+        return sum;
+    }
+
+    private void CalculateSeriesValues()
+    {
+        seriesValues = new double[n];
+        for (int i = 0; i < n; i++)
+        {
+            seriesValues[i] = Math.Pow(-1, i) * Math.Pow(x, 2 * i + 1) / Factorial(2 * i + 1);
+        }
+    }
+
+    private double Factorial(int n)
+    {
+        if (n <= 1)
+            return 1;
+        else
+            return n * Factorial(n - 1);
+    }
+
+    public string[] GetSeriesTable()
+    {
+        string[] table = new string[n];
+        for (int i = 0; i < n; i++)
+        {
+            table[i] = $"Член {i + 1}: {seriesValues[i]}";
+        }
+        return table;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Title = "Фамилия И.О., группа, № работы и № варианта";
+
+        Console.WriteLine("Вычисление суммы ряда с заданной точностью");
+        Console.WriteLine("Формула для расчета функции: ваша формула");
+        Console.WriteLine("Формула элемента ряда: ваша формула элемента ряда");
+
+        Console.Write("Введите значение аргумента X: ");
+        double x = double.Parse(Console.ReadLine());
+
+        Console.Write("Введите количество членов ряда: ");
+        int n = int.Parse(Console.ReadLine());
+
+        Console.Write("Введите заданную точность: ");
+        double precision = double.Parse(Console.ReadLine());
+
+        CustomSeries customSeries = new CustomSeries(x, n, precision);
+        double customSum = customSeries.CalculateSum();
+
+        double mathSum = Math.Sin(x); // Замените на вашу функцию, если необходимо
+
+        Console.WriteLine("\nТаблица значений элементов ряда:");
+        string[] seriesTable = customSeries.GetSeriesTable();
+        foreach (string row in seriesTable)
+        {
+            Console.WriteLine(row);
+        }
+
+        Console.WriteLine($"\nРасчетное значение функции (суммы ряда): {customSum}");
+        Console.WriteLine($"Значение, полученное с помощью Math: {mathSum}");
+        Console.WriteLine($"Погрешность: {Math.Abs(customSum - mathSum)}");
+
+        Console.ReadKey();
+    }
+}

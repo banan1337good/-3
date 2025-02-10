@@ -1,0 +1,64 @@
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        ConsoleKeyInfo keyInfo;
+        do
+        {
+            Console.Clear();
+            Console.Title = "Пантелеева Анастасия Олеговна, работа № 4, вариант № 11";
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            Console.WriteLine("Табулирование функции y = (Math.Cos(x) + Math.Sin(x)) / (Math.Cos(x) - Math.Sin(x))");
+            // Вводим значения a, начального и конечного значений интервала
+            Console.Write("Введите приращение dx: ");
+            double a = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите начальное значение интервала: ");
+            double x = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Введите конечное значение интервала: ");
+            double end = Convert.ToDouble(Console.ReadLine());
+
+            // Вычисляем наибольшее, наименьшее и сумму значений функции
+
+            double max = 0;
+            double min = 1000000;
+            double sum = 0;
+            int n = 1;
+
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("№\t|  Значение X   |   Значение Y");
+            Console.WriteLine("-----------------------------------------");
+
+            while (x <= end)
+            {
+                double y = (Math.Cos(x) + Math.Sin(x)) / (Math.Cos(x) - Math.Sin(x));
+                Console.WriteLine("{0}\t|\t{1:f2}\t|{2,10:f4}", n, x, y);
+                if (y > max)
+                {
+                    max = y;
+                }
+                if (y < min)
+                {
+                    min = y;
+                }
+                sum += y;
+                x = x + a;
+                n = n + 1;
+            }
+
+            // Выводим результаты на экран с использованием интерполяции строк
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine($"Наибольшее значение y = {max:f4} при x = {max:f2}");
+            Console.WriteLine($"Наименьшее значение y = {min:f4} при x = {min:f2}");
+            Console.WriteLine($"Сумма значений = {sum:f4}");
+            Console.WriteLine("-----------------------------------------");
+
+            // Предлагаем пользователю повторить программу
+            Console.WriteLine("Нажмите Enter для повторного выполнения программы или любую другую клавишу для выхода.");
+            keyInfo = Console.ReadKey(true);
+        }
+        while (keyInfo.Key == ConsoleKey.Enter);
+    }
+}
+               
+   

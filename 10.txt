@@ -1,0 +1,46 @@
+public partial class MainForm : Form1
+    {
+        private List<string> stringList;
+        private object toolStripStatusLabel1;
+        private object toolStripStatusLabel2;
+
+        public MainForm()
+        {
+            InitializeComponent();
+
+            // Инициализация списка строк
+            stringList = new List<string>();
+
+            // Заполняем StatusBar
+            toolStripStatusLabel1 = "Номер работы: №13";
+            toolStripStatusLabel2 = "Фамилия и группа: Пантелеева, 222";
+        }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            // Добавление новой строки в список и ListBox
+            //string newString = textBox1.Text;
+            //stringList.Add(newString);
+            //listBox1.Items.Add(newString);
+            //textBox1.Clear();
+        }
+
+        private void removeButton_Click(object sender, EventArgs e)
+        {
+            //// Удаление выбранной строки из списка и ListBox
+            //if (listBox1.SelectedIndex != -1)
+            //{
+            //    string removedString = listBox1.SelectedItem.ToString();
+            //    stringList.Remove(removedString);
+            //    listBox1.Items.Remove(listBox1.SelectedItem);
+            }
+        }
+    }
+}
+    
+

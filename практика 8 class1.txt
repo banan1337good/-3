@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApp1
+{
+    internal class Class1
+    {
+        private double radius;
+        private double height;
+        // Описание объекта
+        public string description;
+
+        // Конструктор класса без параметров
+        public Class1()
+        {
+            description = "Фигура";
+        }
+
+        // Конструктор класса с параметрами (радиус и высота)
+        public Class1(double radius, double height)
+        {
+            this.radius = radius;
+            this.height = height;
+            description = "Конус";
+        }
+
+        // Метод расчета площади боковой поверхности фигуры
+        public double CalculateLateralSurfaceArea()
+        {
+            if (description == "Конус")
+            {
+                return Math.PI * radius * Math.Sqrt(radius * radius + height * height);
+            }
+            else
+            {
+                // Здесь можно добавить расчет площади боковой поверхности для другой фигуры
+                return 0;
+            }
+        }
+
+        // Метод расчета площади поверхности фигуры
+        public double CalculateSurfaceArea()
+        {
+            if (description == "Конус")
+            {
+                return Math.PI * radius * (radius + Math.Sqrt(radius * radius + height * height));
+            }
+            else
+            {
+                // Здесь можно добавить расчет площади поверхности для другой фигуры
+                return 0;
+            }
+        }
+
+        // Метод расчета объема фигуры
+        public double CalculateVolume()
+        {
+            if (description == "Конус")
+            {
+                return (Math.PI * radius * radius * height) / 3;
+            }
+            else
+            {
+                // Здесь можно добавить расчет объема для другой фигуры
+                return 0;
+            }
+        }
+    }
+}
