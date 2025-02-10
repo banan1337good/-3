@@ -1,0 +1,29 @@
+input_str = input("Введите коэффициенты a, b и c через пробел: ")
+coefficients = input_str.split()
+a = float(coefficients[0])
+b = float(coefficients[1])
+c = float(coefficients[2])
+
+# Проверка на случай a = 0
+if a == 0:
+    if b == 0:
+        print("Бесконечное количество корней")
+    else:
+        x = -c / b
+        print("Один корень: {:.3f}".format(x))
+else:
+    # Вычисление дискриминанта
+    discriminant = b**2 - 4*a*c
+
+    if discriminant > 0:
+        # Два действительных корня
+        x1 = (-b + discriminant**0.5) / (2*a)
+        x2 = (-b - discriminant**0.5) / (2*a)
+        print("Два корня: {:.3f} и {:.3f}".format(x1, x2))
+    elif discriminant == 0:
+        # Один действительный корень
+        x = -b / (2*a)
+        print("Один корень: {:.3f}".format(x))
+    else:
+        # Нет действительных корней
+        print("Нет действительных корней")

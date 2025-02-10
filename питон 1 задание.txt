@@ -1,0 +1,30 @@
+name = input("Введите имя:")
+height = input("Введите свой рост (см):")
+weight = input("Введите свой вес(кг):")
+gender = input("Введите ваш пол (мужчина или женщина): ")
+
+try:
+    height = int(height)
+    weight = int(weight)
+except:
+    print("Ошибка ввода роста или веса. Введите числа")
+    exit()
+
+if gender == "мужчина":
+    rec_weight = height - 100
+elif gender == "женщина":
+    rec_weight = height - 110
+else:
+    print ("Неверно указан пол. Введите 'мужчина' или 'женщина'.")
+    exit()
+    print("Привет ", name, "!", sep="")
+    print("Ваш рекомендуемый вес:", rec_weight, "кг")
+
+if weight > rec_weight:
+    shift = weight - rec_weight
+    print("Следует сбрость {} кг".format(shift))
+elif weight < rec_weight:
+    shift = rec_weight - weight
+    print("Следует набрать {} кг".format(shift))
+else:
+    print("Вес в норме (не превышает норму).")
