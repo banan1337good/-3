@@ -1,0 +1,39 @@
+import math
+
+# Ввод координат точек
+px = float(input("Введите x-координату точки P: "))
+py = float(input("Введите y-координату точки P: "))
+ax = float(input("Введите x-координату точки A: "))
+ay = float(input("Введите y-координату точки A: "))
+bx = float(input("Введите x-координату точки B: "))
+by = float(input("Введите y-координату точки B: "))
+
+def get_distance(px, py, ax, ay, bx, by):
+    # Вычисляем длину отрезка AB
+    if (ax, ay) == (bx, by):
+        return math.sqrt((px - ax) ** 2 + (py - ay) ** 2)
+
+    # Вычисляем проекцию вектора AC на вектор AB
+    AC = ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / ((bx - ax)**2 + (by - ay)**2)
+
+    # Находим ближайшую точку на отрезке AB к точке C
+    x = ax + AC * (bx - ax)
+    y = ay + AC * (by - ay)
+
+    # Проверяем, находится ли ближайшая точка в пределах отрезка AB
+    if 0 <= AC <= 1:
+        # Вычисляем расстояние от точки C до ближайшей точки на отрезке AB
+        distance = math.sqrt((px - x) ** 2 + (py - y) ** 2)
+    else:
+        # Если ближайшая точка находится за пределами отрезка, то расстояние равно расстоянию до ближайшего конца отрезка
+        start = math.sqrt((px - ax) ** 2 + (py - ay) ** 2)
+        end = math.sqrt((px - bx) ** 2 + (py - by) ** 2)
+        distance = min(start, end)
+
+    return distance
+
+# Вычисление расстояния
+result = get_distance(px, py, ax, ay, bx, by)
+
+# Вывод результата с форматированием
+print("Расстояние от точки P до отрезка AB: %.4f" % result)
