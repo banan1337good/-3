@@ -1,0 +1,62 @@
+import math
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+print("ФИО: Пантелеева Анастасия Олеговна")
+print("Номер работы: 3")
+print("Вариант: 13")
+print("Формула: y = (x ** 2 + 2 * x - 3 + (x + 1) * math.sqrt(x ** 2 - 9) /"
+      "x ** 2 - 2 * x - 3 + (x - 1) * math.sqrt(x ** 2 - 9))")
+
+def func_y(x):
+    w = math.sqrt(x ** 2 - 9)
+    return (x ** 2 + 2 * x - 3 + (x + 1) * w) / (x ** 2 - 2 * x - 3 + (x - 1) * w)
+
+try:
+    Xn = float(input("Введите начальное значение X: "))
+    Xk = float(input("Введите конечное значение X: "))
+    dX = float(input("Введите шаг по X: "))
+except Exception as err:
+    print("Ошибка: Введите числовые значения для Xn, Xk и dX.")
+    exit()
+
+x_list = np.arange(Xn, Xk, dX)
+y_list = [func_y(x) for x in x_list]
+
+val = [round(Xn + i * dX, 2) for i in range(int((Xk - Xn) / dX) + 1)]
+
+maxY = float('-inf')
+minY = float('inf')
+sumY = 0
+maxX = 0
+minX = 0
+
+print("\n")
+print("\n{:^4} | {:^10} | {:^10} |".format("№","X", "Y"))
+print("================================")
+
+for i, x in enumerate(val, start=1):
+    w = math.sqrt(x ** 2 - 9)
+    y = (x ** 2 + 2 * x - 3 + (x + 1) * w) / (x ** 2 - 2 * x - 3 + (x - 1) * w)
+    print("{:^4} | {:^10.2f} | {:^10.2f} |".format(i, x, y))
+
+    if y > maxY:
+        maxY = y
+        maxX = x
+    if y < minY:
+        minY = y
+        minX = x
+    sumY += y
+
+print("================================")
+print("Наибольший y = {:.4f} при X = {:.2f}".format(maxY, maxX))
+print("Наименьший y = {:.4f} при X = {:.2f}".format(minY, minX))
+print("Сумма y = {:.4f}".format(sumY))
+print("================================")
+print("\n")
+plt.title("График функции и табулирование (точки)")
+plt.plot(x_list,y_list,'-', color='pink')
+plt.scatter(x_list,y_list, color='purple')
+plt.grid(True)
+plt.show()
